@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="cs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>VoltDesk — řemesla jednoduše</title>
+<style>
+:root{--bg:#0b1020;--panel:#111a2e;--panel2:#16223a;--line:#26344d;--text:#eef4ff;--muted:#9aabc4;--blue:#4d8dff;--cyan:#50d4d2;--green:#49d7a0;--radius:16px}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.5 Inter,system-ui,Segoe UI,Arial,sans-serif}
+button,input,select,textarea{font:inherit}button{cursor:pointer}.app{min-height:100vh;display:grid;grid-template-columns:245px 1fr}
+aside{background:#0e172a;border-right:1px solid var(--line);padding:22px 15px;display:flex;flex-direction:column;gap:24px}
+.brand{display:flex;align-items:center;gap:10px;padding:0 10px;font-size:21px;font-weight:800;letter-spacing:-.6px}.logo{width:34px;height:34px;border-radius:11px;background:linear-gradient(135deg,var(--blue),var(--cyan));display:grid;place-items:center;color:#061124;font-weight:900}
+.small-label{font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:#71839f;padding:0 12px;margin-bottom:6px}
+nav{display:grid;gap:5px}.navbtn{display:flex;align-items:center;gap:11px;width:100%;border:0;background:transparent;color:#aab9cf;padding:11px 12px;border-radius:10px;text-align:left}.navbtn:hover,.navbtn.active{background:#1a2a45;color:white}.navbtn.active{box-shadow:inset 3px 0 var(--blue)}.navicon{width:20px;text-align:center;color:#76a7ff}
+.aside-bottom{margin-top:auto;border:1px solid var(--line);background:#121e33;border-radius:13px;padding:14px;color:var(--muted);font-size:12px}.aside-bottom strong{display:block;color:var(--text);font-size:13px;margin-bottom:4px}
+main{min-width:0}.topbar{height:74px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 34px;gap:12px}.crumb{color:var(--muted);font-size:13px}.user{display:flex;align-items:center;gap:10px}.avatar{width:35px;height:35px;border-radius:50%;display:grid;place-items:center;background:#244674;color:#cfe2ff;font-weight:800}.mobile-menu{display:none}
+.content{max-width:1250px;padding:32px 34px 60px;margin:auto}.heading{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin-bottom:25px}.eyebrow{font-size:11px;color:var(--cyan);text-transform:uppercase;letter-spacing:1.8px;font-weight:800}.heading h1{font-size:30px;line-height:1.2;margin:6px 0 8px;letter-spacing:-1px}.heading p{margin:0;color:var(--muted)}.btn{border:1px solid var(--line);background:#192740;color:var(--text);padding:10px 15px;border-radius:10px;font-weight:700}.btn.primary{background:var(--blue);border-color:var(--blue);color:#06132b}.btn:hover{filter:brightness(1.12)}.btn.small{padding:7px 10px;font-size:12px}
+.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}.stat,.card{border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,#121d32,#10192b);padding:19px}.stat-top{display:flex;justify-content:space-between;color:var(--muted);font-size:13px}.stat-icon{background:#1e3556;border-radius:9px;width:34px;height:34px;display:grid;place-items:center;color:#8eb8ff}.stat strong{font-size:29px;display:block;margin-top:10px;letter-spacing:-1px}.stat small{color:var(--green);font-size:12px}.columns{grid-template-columns:minmax(0,1.5fr) minmax(280px,1fr)}.card h2{font-size:17px;margin:0 0 5px}.sub{color:var(--muted);font-size:13px;margin:0 0 18px}.activity{display:grid;gap:0}.activity-row{display:flex;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #202d43}.activity-row:last-child{border-bottom:0}.activity-icon{width:38px;height:38px;border-radius:12px;background:#1a2d4a;display:grid;place-items:center}.activity-row strong{display:block;font-size:13px}.activity-row small{color:var(--muted)}.pill{display:inline-flex;align-items:center;border-radius:30px;padding:4px 9px;font-size:11px;font-weight:700;background:#1d3a35;color:#65e0b0}.pill.blue{background:#1b3151;color:#9bc3ff}.pill.orange{background:#423321;color:#ffc77d}
+.searchbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}.field{background:#0d1729;color:var(--text);border:1px solid var(--line);border-radius:10px;padding:11px 12px;min-width:0;width:100%;outline:none}.field:focus{border-color:var(--blue)}.searchbar .field{flex:1;min-width:180px}.trades{grid-template-columns:repeat(3,minmax(0,1fr))}.trade{border:1px solid var(--line);background:#121d32;border-radius:16px;overflow:hidden}.trade-cover{height:100px;background:linear-gradient(120deg,#17365a,#15243b 55%,#1b4c54);padding:16px;display:flex;justify-content:space-between;align-items:flex-start}.trade-body{padding:17px}.trade-title{display:flex;align-items:center;gap:10px;margin-top:-34px;position:relative}.trade-avatar{width:54px;height:54px;border:3px solid #121d32;border-radius:15px;background:#294a70;display:grid;place-items:center;font-size:21px;font-weight:800}.trade h3{margin:10px 0 3px;font-size:17px}.muted{color:var(--muted)}.trade p{color:var(--muted);font-size:13px;min-height:40px}.trade-foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:13px;margin-top:13px;font-size:12px}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.form-group{display:grid;gap:6px}.form-group label{color:var(--muted);font-size:12px}.form-group.full{grid-column:1/-1}textarea.field{min-height:110px;resize:vertical}.form-actions{display:flex;justify-content:flex-end;gap:9px;margin-top:18px}.job{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:16px 0;border-bottom:1px solid var(--line)}.job:last-child{border-bottom:0}.job h3{margin:0 0 4px;font-size:14px}.job p{margin:0;color:var(--muted);font-size:12px}.empty{border:1px dashed #34445e;padding:35px;border-radius:14px;text-align:center;color:var(--muted)}.chat-layout{display:grid;grid-template-columns:260px 1fr;min-height:400px}.chat-list{border-right:1px solid var(--line);padding-right:16px}.chat-contact{padding:13px;border-radius:10px;cursor:pointer}.chat-contact.active,.chat-contact:hover{background:#1a2a45}.chat-area{padding:0 0 0 18px;display:flex;flex-direction:column}.messages{flex:1;display:flex;flex-direction:column;gap:10px;padding:10px 0 20px}.bubble{padding:10px 13px;background:#1a2b46;border-radius:13px;max-width:75%;align-self:flex-start}.bubble.mine{background:#214c84;align-self:flex-end}.chat-send{display:flex;gap:8px}.calendar{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}.dayname,.day{padding:10px 4px;text-align:center;font-size:12px}.dayname{color:var(--muted)}.day{background:#111d31;border:1px solid #202d43;border-radius:8px;min-height:45px}.day.today{border-color:var(--blue);color:#9bc3ff}.day.event:after{content:"";display:block;width:5px;height:5px;border-radius:50%;background:var(--cyan);margin:4px auto 0}.price-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.price{border:1px solid var(--line);border-radius:16px;padding:22px;background:#121d32}.price.featured{border-color:var(--blue);box-shadow:0 0 0 1px #4d8dff33}.price h3{margin:0}.price .amount{font-size:30px;font-weight:800;margin:15px 0}.price ul{padding-left:19px;color:var(--muted);font-size:13px;line-height:2}.hidden{display:none!important}.notice{background:#172e43;border:1px solid #254b64;color:#b8e7f0;padding:13px 15px;border-radius:12px;font-size:13px;margin-bottom:18px}
+@media(max-width:950px){.app{grid-template-columns:205px 1fr}.content{padding:25px 20px}.topbar{padding:0 20px}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.trades{grid-template-columns:repeat(2,minmax(0,1fr))}.columns{grid-template-columns:1fr}}
+@media(max-width:650px){.app{display:block}aside{display:none;position:fixed;z-index:10;top:0;bottom:0;left:0;width:260px;box-shadow:20px 0 60px #0008}aside.open{display:flex}.mobile-menu{display:inline-block}.topbar{height:62px;padding:0 15px}.content{padding:22px 14px 40px}.heading h1{font-size:25px}.heading{flex-direction:column}.stats{gap:9px}.stat{padding:13px}.stat strong{font-size:24px}.trades,.price-grid{grid-template-columns:1fr}.form-grid{grid-template-columns:1fr}.form-group.full{grid-column:auto}.chat-layout{grid-template-columns:1fr}.chat-list{border-right:0;border-bottom:1px solid var(--line);padding:0 0 10px;margin-bottom:12px}.chat-area{padding:0}.day{min-height:36px;padding:7px 1px;font-size:11px}.topbar .crumb{display:none}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside id="sidebar">
+  <div class="brand"><div class="logo">V</div> VoltDesk</div>
+  <div><div class="small-label">Pracovní prostor</div><nav id="nav">
+    <button class="navbtn active" data-page="overview"><span class="navicon">◫</span>Přehled</button>
+    <button class="navbtn" data-page="find"><span class="navicon">⌕</span>Najít řemeslníka</button>
+    <button class="navbtn" data-page="request"><span class="navicon">＋</span>Nová poptávka</button>
+    <button class="navbtn" data-page="jobs"><span class="navicon">▤</span>Moje zakázky</button>
+    <button class="navbtn" data-page="messages"><span class="navicon">▱</span>Zprávy</button>
+    <button class="navbtn" data-page="calendar"><span class="navicon">▦</span>Kalendář</button>
+    <button class="navbtn" data-page="profile"><span class="navicon">◎</span>Veřejný profil</button>
+    <button class="navbtn" data-page="services"><span class="navicon">⌁</span>Služby a ceny</button>
+    <button class="navbtn" data-page="membership"><span class="navicon">◇</span>Členství a ceny</button>
+    <button class="navbtn" data-page="about"><span class="navicon">ⓘ</span>O VoltDesk</button>
+    <button class="navbtn" data-page="rules"><span class="navicon">▣</span>Pravidla a soukromí</button>
+  </nav></div>
+  <div class="aside-bottom"><strong>VoltDesk · DEMO</strong>Ukázková verze projektu.<br>Data se ukládají jen v tomto prohlížeči.</div>
+</aside>
+<main>
+<header class="topbar"><div style="display:flex;align-items:center;gap:12px"><button class="btn mobile-menu" id="menuBtn">☰</button><div class="crumb">VoltDesk <span style="color:#51627c">/</span> <span id="crumbPage">Přehled</span></div></div><div class="user"><span class="pill">● Demo režim</span><div class="avatar">V</div></div></header>
+<div class="content">
+<section class="page" id="page-overview">
+<div class="heading"><div><div class="eyebrow">Úterý · pracovní prostor</div><h1>Vítej ve VoltDesk 👋</h1><p>Řemesla, zakázky a domluva na jednom místě.</p></div><button class="btn primary" data-go="request">＋ Vytvořit poptávku</button></div>
+<div class="grid stats">
+<div class="stat"><div class="stat-top">Aktivní zakázky <span class="stat-icon">▤</span></div><strong id="statJobs">2</strong><small>Ukázková data</small></div>
+<div class="stat"><div class="stat-top">Nové zprávy <span class="stat-icon">▱</span></div><strong>3</strong><small>Demo konverzace</small></div>
+<div class="stat"><div class="stat-top">Uložený řemeslníci <span class="stat-icon">☆</span></div><strong>4</strong><small>Ve tvém přehledu</small></div>
+<div class="stat"><div class="stat-top">Plánované termíny <span class="stat-icon">▦</span></div><strong>5</strong><small>V tomto týdnu</small></div>
+</div>
+<div class="grid columns">
+<div class="card"><h2>Poslední aktivita</h2><p class="sub">Co se děje ve tvém pracovním prostoru</p><div class="activity">
+<div class="activity-row"><div class="activity-icon">⚡</div><div style="flex:1"><strong>Elektroinstalace kuchyně</strong><small>Nová odpověď od Elektro Novák</small></div><span class="pill blue">Nové</span></div>
+<div class="activity-row"><div class="activity-icon">🔧</div><div style="flex:1"><strong>Oprava zásuvky</strong><small>Termín potvrzen · 16. října</small></div><span class="pill">Potvrzeno</span></div>
+<div class="activity-row"><div class="activity-icon">💬</div><div style="flex:1"><strong>Zpráva od Jana Svobody</strong><small>„Můžu se zastavit ve čtvrtek.“</small></div><button class="btn small" data-go="messages">Otevřít</button></div>
+</div></div>
+<div class="card"><h2>Rychlé akce</h2><p class="sub">Časté úkoly na jednom místě</p><div class="activity">
+<div class="activity-row"><div class="activity-icon">⌕</div><div style="flex:1"><strong>Najít řemeslníka</strong><small>Prohlédni si profily ve svém okolí</small></div><button class="btn small" data-go="find">Najít</button></div>
+<div class="activity-row"><div class="activity-icon">▦</div><div style="flex:1"><strong>Naplánovat práci</strong><small>Podívej se na přehled termínů</small></div><button class="btn small" data-go="calendar">Kalendář</button></div>
+<div class="activity-row"><div class="activity-icon">◎</div><div style="flex:1"><strong>Upravit veřejný profil</strong><small>Informace a kontakt</small></div><button class="btn small" data-go="profile">Upravit</button></div>
+</div></div></div>
+</section>
+<section class="page hidden" id="page-find">
+<div class="heading"><div><div class="eyebrow">Katalog služeb</div><h1>Najít řemeslníka</h1><p>Prohlédni si ukázkové profily a vyhledej vhodnou službu.</p></div></div>
+<div class="searchbar"><input id="searchTrades" class="field" placeholder="Hledat třeba elektrikáře nebo instalatéra…"><select id="filterTrade" class="field" style="max-width:220px"><option value="">Všechny obory</option><option>Elektrikář</option><option>Instalatér</option><option>Mechanik</option><option>Stavba</option></select></div>
+<div class="grid trades" id="tradesList"></div>
+</section>
+<section class="page hidden" id="page-request">
+<div class="heading"><div><div class="eyebrow">Nová zakázka</div><h1>Vytvořit poptávku</h1><p>Popiš, co potřebuješ. V demo verzi se poptávka uloží jen do tohoto prohlížeče.</p></div></div>
+<div class="notice">ℹ️ Toto je testovací formulář. Poptávku zatím nikdo skutečný nedostane.</div>
+<div class="card"><form id="requestForm"><div class="form-grid">
+<div class="form-group"><label for="jobTitle">Název poptávky *</label><input id="jobTitle" class="field" required placeholder="Např. oprava zásuvky"></div>
+<div class="form-group"><label for="jobTrade">Obor *</label><select id="jobTrade" class="field" required><option value="">Vyber obor</option><option>Elektrikář</option><option>Instalatér</option><option>Mechanik</option><option>Stavba</option><option>Jiné</option></select></div>
+<div class="form-group"><label for="jobLocation">Místo realizace *</label><input id="jobLocation" class="field" required placeholder="Obec nebo město"></div>
+<div class="form-group"><label for="jobDate">Preferovaný termín</label><input id="jobDate" type="date" class="field"></div>
+<div class="form-group"><label for="jobUrgency">Naléhavost</label><select id="jobUrgency" class="field"><option>Běžná</option><option>Co nejdříve</option><option>Nouzová</option></select></div>
+<div class="form-group"><label for="jobBudget">Orientační rozpočet (Kč)</label><input id="jobBudget" type="number" min="0" class="field" placeholder="Např. 2500"></div>
+<div class="form-group full"><label for="jobDesc">Popis práce *</label><textarea id="jobDesc" class="field" required placeholder="Popiš, co je potřeba udělat…"></textarea></div>
+</div><div class="form-actions"><button type="reset" class="btn">Vymazat</button><button type="submit" class="btn primary">Uložit poptávku</button></div></form></div>
+</section>
+<section class="page hidden" id="page-jobs">
+<div class="heading"><div><div class="eyebrow">Evidence práce</div><h1>Moje zakázky</h1><p>Poptávky vytvořené v této demo verzi.</p></div><button class="btn primary" data-go="request">＋ Nová poptávka</button></div>
+<div class="card"><div id="jobsList"></div></div>
+</section>
+<section class="page hidden" id="page-messages">
+<div class="heading"><div><div class="eyebrow">Komunikace</div><h1>Zprávy</h1><p>Ukázkový chat bez připojení k dalším uživatelům.</p></div></div>
+<div class="card chat-layout"><div class="chat-list"><div class="chat-contact active"><strong>Jan Svoboda</strong><div class="muted" style="font-size:12px">Elektroinstalace</div></div><div class="chat-contact"><strong>Elektro Novák</strong><div class="muted" style="font-size:12px">Poptávka v kuchyni</div></div><div class="chat-contact"><strong>Instalatér Dvořák</strong><div class="muted" style="font-size:12px">Oprava baterie</div></div></div><div class="chat-area"><div style="padding-bottom:12px;border-bottom:1px solid var(--line)"><strong id="chatName">Jan Svoboda</strong><div class="muted" style="font-size:12px">Ukázková konverzace</div></div><div class="messages" id="messagesBox"><div class="bubble">Dobrý den, můžu se zastavit ve čtvrtek odpoledne.</div><div class="bubble mine">Dobrý den, čtvrtek mi vyhovuje.</div><div class="bubble">Super, ještě upřesníme čas.</div></div><form id="chatForm" class="chat-send"><input id="chatInput" class="field" placeholder="Napiš testovací zprávu…" required><button class="btn primary">Odeslat</button></form></div></div>
+</section>
+<section class="page hidden" id="page-calendar">
+<div class="heading"><div><div class="eyebrow">Plánování</div><h1>Kalendář</h1><p>Ukázkový měsíční kalendář. Události nejsou sdílené.</p></div><div><button class="btn" id="prevMonth">←</button> <button class="btn" id="nextMonth">→</button></div></div>
+<div class="card"><div style="font-weight:800;font-size:18px;margin-bottom:18px" id="monthTitle"></div><div class="calendar" id="calendarGrid"></div></div>
+</section>
+<section class="page hidden" id="page-profile">
+<div class="heading"><div><div class="eyebrow">Tvá prezentace</div><h1>Veřejný profil</h1><p>Uprav si, jak se můžeš zobrazovat zákazníkům.</p></div><button class="btn primary" id="saveProfile">Uložit změny</button></div>
+<div class="card"><div class="form-grid"><div class="form-group"><label>Název firmy / jméno</label><input id="profileName" class="field" value="VoltDesk Demo Elektro"></div><div class="form-group"><label>Hlavní obor</label><select id="profileTrade" class="field"><option>Elektrikář</option><option>Instalatér</option><option>Mechanik</option><option>Stavba</option></select></div><div class="form-group"><label>Město / oblast působení</label><input id="profileCity" class="field" value="Příbram a okolí"></div><div class="form-group"><label>Telefon (demo)</label><input class="field" placeholder="+420 000 000 000"></div><div class="form-group full"><label>O mně / o firmě</label><textarea id="profileAbout" class="field">Ukázkový profil řemeslníka na platformě VoltDesk. Tato stránka slouží k testování designu.</textarea></div></div><div class="notice" style="margin-top:18px;margin-bottom:0">Náhled: <strong id="profilePreview">VoltDesk Demo Elektro</strong> · <span id="profilePreviewCity">Příbram a okolí</span></div></div>
+</section>
+<section class="page hidden" id="page-services">
+<div class="heading"><div><div class="eyebrow">Nabídka práce</div><h1>Služby a ceny</h1><p>Spravuj seznam služeb a orientační ceny.</p></div><button class="btn primary" id="addService">＋ Přidat službu</button></div>
+<div class="card"><div id="servicesList"></div></div>
+</section>
+<section class="page hidden" id="page-membership">
+<div class="heading"><div><div class="eyebrow">Členství</div><h1>Plány VoltDesk</h1><p>Ukázka možného budoucího ceníku. Žádné platby nejsou aktivní.</p></div></div>
+<div class="grid price-grid">
+<div class="price"><span class="pill">Začátek</span><h3>Free</h3><div class="amount">0 Kč <span class="muted" style="font-size:12px">/ měsíc</span></div><ul><li>Veřejný profil</li><li>Základní katalog služeb</li><li>Přijímání poptávek</li></ul><button class="btn" style="width:100%" data-toast="Toto je pouze demo členství.">Vyzkoušet zdarma</button></div>
+<div class="price featured"><span class="pill blue">Pro řemeslníky</span><h3>Pro</h3><div class="amount">249 Kč <span class="muted" style="font-size:12px">/ měsíc</span></div><ul><li>Vše z Free</li><li>Rozšířený kalendář</li><li>Evidence zakázek</li><li>Automatické připomínky</li></ul><button class="btn primary" style="width:100%" data-toast="Platby ještě nejsou zapojené.">Zvolit Pro</button></div>
+<div class="price"><span class="pill orange">Týmy</span><h3>Business</h3><div class="amount">499 Kč <span class="muted" style="font-size:12px">/ měsíc</span></div><ul><li>Vše z Pro</li><li>Více členů týmu</li><li>Pokročilé přehledy</li><li>Prioritní podpora</li></ul><button class="btn" style="width:100%" data-toast="Platby ještě nejsou zapojené.">Zvolit Business</button></div>
+</div>
+</section>
+<section class="page hidden" id="page-about">
+<div class="heading"><div><div class="eyebrow">Naše myšlenka</div><h1>O VoltDesk</h1><p>Jedno místo pro řemeslníky a lidi, kteří potřebují jejich pomoc.</p></div></div>
+<div class="grid columns"><div class="card"><h2>Co chceme řešit</h2><p class="muted">Najít spolehlivého řemeslníka může být složité. VoltDesk má propojit zákazníky s odborníky, usnadnit zadávání poptávek, domluvu termínů a správu zakázek.</p></div><div class="card"><h2>Na čem pracujeme</h2><div class="activity"><div class="activity-row"><span class="pill">01</span><div><strong>Katalog řemeslníků</strong><small>Profily, služby a hodnocení</small></div></div><div class="activity-row"><span class="pill blue">02</span><div><strong>Zakázky a kalendář</strong><small>Poptávky, termíny a přehled práce</small></div></div><div class="activity-row"><span class="pill orange">03</span><div><strong>Bezpečná komunikace</strong><small>Zprávy, ochrana dat a důvěra</small></div></div></div></div></div>
+</section>
+<section class="page hidden" id="page-rules">
+<div class="heading"><div><div class="eyebrow">Transparentnost</div><h1>Pravidla a soukromí</h1><p>Informace pro testovací verzi VoltDesk.</p></div></div>
+<div class="card"><h2>Demo verze — důležité informace</h2><p class="muted">Tento prototyp slouží pouze k vyzkoušení vzhledu a základních interakcí. Nepoužívej ho k odesílání skutečných osobních údajů ani citlivých informací.</p><h2 style="margin-top:24px">Osobní údaje</h2><p class="muted">Poptávky a zprávy v této verzi se ukládají pouze do místního úložiště prohlížeče. Neodesílají se skutečným řemeslníkům ani na server. Při vymazání dat prohlížeče se mohou ztratit.</p><h2 style="margin-top:24px">Budoucí ostrý provoz</h2><p class="muted">Před spuštěním skutečné služby bude potřeba připravit a právně zkontrolovat podmínky používání, zásady ochrany osobních údajů, procesy pro stížnosti a zabezpečení účtů.</p></div>
+</section>
+</div>
+</main>
+</div>
+<div id="toast" style="position:fixed;bottom:20px;right:20px;max-width:360px;background:#1a2d48;border:1px solid #355478;padding:13px 17px;border-radius:12px;box-shadow:0 15px 40px #0007;display:none;z-index:20"></div>
+<script>
+const trades=[
+{name:"Elektro Novák",trade:"Elektrikář",city:"Příbram",rating:"4,9",price:"od 450 Kč/h",initials:"EN",desc:"Elektroinstalace, opravy zásuvek a světel."},
+{name:"Jan Svoboda",trade:"Elektrikář",city:"Dobříš",rating:"4,8",price:"od 500 Kč/h",initials:"JS",desc:"Revize, opravy a nové instalace."},
+{name:"Instalatér Dvořák",trade:"Instalatér",city:"Příbram",rating:"4,7",price:"od 400 Kč/h",initials:"ID",desc:"Voda, odpady, baterie a drobné opravy."},
+{name:"Moto servis Pavel",trade:"Mechanik",city:"Dobříš",rating:"4,9",price:"od 550 Kč/h",initials:"MP",desc:"Základní servis motocyklů a skútrů."},
+{name:"Stavby Král",trade:"Stavba",city:"Sedlčany",rating:"4,6",price:"dle dohody",initials:"SK",desc:"Drobné stavební práce a rekonstrukce."},
+{name:"Elektro Marek",trade:"Elektrikář",city:"Sedlčany",rating:"4,8",price:"od 420 Kč/h",initials:"EM",desc:"Montáže osvětlení a hledání závad."}
+];
+let jobs=[
+{title:"Elektroinstalace kuchyně",trade:"Elektrikář",location:"Příbram",date:"2026-10-16",status:"Čeká na potvrzení",desc:"Příprava zásuvek a kontrola světel."},
+{title:"Oprava zásuvky",trade:"Elektrikář",location:"Dobříš",date:"2026-10-16",status:"Potvrzeno",desc:"Kontrola a oprava nefunkční zásuvky."}
+];
+let services=[["Montáž zásuvky","od 450 Kč"],["Montáž osvětlení","od 600 Kč"],["Diagnostika závady","od 500 Kč"]];
+const pages={overview:"Přehled",find:"Najít řemeslníka",request:"Nová poptávka",jobs:"Moje zakázky",messages:"Zprávy",calendar:"Kalendář",profile:"Veřejný profil",services:"Služby a ceny",membership:"Členství a ceny",about:"O VoltDesk",rules:"Pravidla a soukromí"};
+function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.style.display="block";clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display="none",3000)}
+function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.add("hidden"));document.getElementById("page-"+page).classList.remove("hidden");document.querySelectorAll(".navbtn").forEach(b=>b.classList.toggle("active",b.dataset.page===page));document.getElementById("crumbPage").textContent=pages[page];document.getElementById("sidebar").classList.remove("open");if(page==="find")renderTrades();if(page==="jobs")renderJobs();if(page==="services")renderServices();if(page==="calendar")renderCalendar();window.scrollTo(0,0)}
+document.querySelectorAll("[data-page]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.page)));
+document.querySelectorAll("[data-go]").forEach(b=>b.addEventListener("click",()=>go(b.dataset.go)));
+document.querySelectorAll("[data-toast]").forEach(b=>b.addEventListener("click",()=>toast(b.dataset.toast)));
+document.getElementById("menuBtn").addEventListener("click",()=>document.getElementById("sidebar").classList.toggle("open"));
+function renderTrades(){const q=(document.getElementById("searchTrades").value||"").toLowerCase();const f=document.getElementById("filterTrade").value;const arr=trades.filter(t=>(!f||t.trade===f)&&[t.name,t.trade,t.city,t.desc].join(" ").toLowerCase().includes(q));document.getElementById("tradesList").innerHTML=arr.length?arr.map(t=>`<article class="trade"><div class="trade-cover"><span class="pill">● Dostupný profil</span><span style="font-size:22px">✦</span></div><div class="trade-body"><div class="trade-title"><div class="trade-avatar">${t.initials}</div><div style="padding-top:27px"><div class="muted" style="font-size:11px">${t.trade}</div><strong>${t.name}</strong></div></div><p>${t.desc}</p><div class="muted" style="font-size:12px">⌖ ${t.city} a okolí</div><div class="trade-foot"><span>⭐ ${t.rating} · ${t.price}</span><button class="btn small" onclick="toast('Toto je ukázkový profil bez skutečného kontaktu.')">Zobrazit profil</button></div></div></article>`).join(""):'<div class="empty" style="grid-column:1/-1">Žádný řemeslník neodpovídá hledání.</div>'}
+document.getElementById("searchTrades").addEventListener("input",renderTrades);document.getElementById("filterTrade").addEventListener("change",renderTrades);
+function renderJobs(){document.getElementById("jobsList").innerHTML=jobs.length?jobs.map((j,i)=>`<div class="job"><div><h3>${escapeHtml(j.title)}</h3><p>${escapeHtml(j.trade)} · ${escapeHtml(j.location)} · ${j.date||"Termín neuveden"}</p><p style="margin-top:5px">${escapeHtml(j.desc)}</p></div><div style="text-align:right;display:grid;gap:9px;justify-items:end"><span class="pill ${j.status.includes('Čeká')?'orange':''}">${escapeHtml(j.status)}</span><button class="btn small" onclick="removeJob(${i})">Smazat demo</button></div></div>`).join(""):'<div class="empty">Zatím tu nejsou žádné zakázky. Vytvoř první poptávku.</div>';document.getElementById("statJobs").textContent=jobs.length}
+function removeJob(i){jobs.splice(i,1);renderJobs();toast("Demo poptávka byla smazána.")}
+function escapeHtml(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+document.getElementById("requestForm").addEventListener("submit",e=>{e.preventDefault();jobs.unshift({title:document.getElementById("jobTitle").value,trade:document.getElementById("jobTrade").value,location:document.getElementById("jobLocation").value,date:document.getElementById("jobDate").value,status:"Nová demo poptávka",desc:document.getElementById("jobDesc").value});try{localStorage.setItem("voltdeskJobs",JSON.stringify(jobs))}catch(e){}e.target.reset();toast("Poptávka byla uložena pouze v tomto prohlížeči.");go("jobs")});
+try{const saved=localStorage.getItem("voltdeskJobs");if(saved)jobs=JSON.parse(saved)}catch(e){}
+document.getElementById("chatForm").addEventListener("submit",e=>{e.preventDefault();const inp=document.getElementById("chatInput");const b=document.createElement("div");b.className="bubble mine";b.textContent=inp.value;document.getElementById("messagesBox").appendChild(b);inp.value="";document.getElementById("messagesBox").scrollTop=document.getElementById("messagesBox").scrollHeight;toast("Zpráva je jen v místním demo chatu.")});
+document.querySelectorAll(".chat-contact").forEach(c=>c.addEventListener("click",()=>{document.querySelectorAll(".chat-contact").forEach(x=>x.classList.remove("active"));c.classList.add("active");document.getElementById("chatName").textContent=c.querySelector("strong").textContent;document.getElementById("messagesBox").innerHTML='<div class="bubble">Dobrý den, toto je ukázková konverzace.</div><div class="bubble mine">Dobrý den, děkuji za zprávu.</div>'}));
+let calDate=new Date(2026,9,1);function renderCalendar(){const y=calDate.getFullYear(),m=calDate.getMonth();document.getElementById("monthTitle").textContent=new Intl.DateTimeFormat("cs-CZ",{month:"long",year:"numeric"}).format(calDate);const names=["Po","Út","St","Čt","Pá","So","Ne"];let html=names.map(n=>`<div class="dayname">${n}</div>`).join("");let first=(new Date(y,m,1).getDay()+6)%7;for(let i=0;i<first;i++)html+='<div></div>';let count=new Date(y,m+1,0).getDate();for(let d=1;d<=count;d++){let event=[8,16,21,27].includes(d);html+=`<div class="day ${d===13&&m===9&&y===2026?'today':''} ${event?'event':''}" title="${event?'Ukázkový termín':''}">${d}</div>`}document.getElementById("calendarGrid").innerHTML=html}
+document.getElementById("prevMonth").addEventListener("click",()=>{calDate.setMonth(calDate.getMonth()-1);renderCalendar()});document.getElementById("nextMonth").addEventListener("click",()=>{calDate.setMonth(calDate.getMonth()+1);renderCalendar()});
+document.getElementById("saveProfile").addEventListener("click",()=>{document.getElementById("profilePreview").textContent=document.getElementById("profileName").value;document.getElementById("profilePreviewCity").textContent=document.getElementById("profileCity").value;toast("Náhled profilu byl upraven.")});
+function renderServices(){document.getElementById("servicesList").innerHTML=services.map((s,i)=>`<div class="job"><div><h3>${escapeHtml(s[0])}</h3><p>Orientační cena: ${escapeHtml(s[1])}</p></div><button class="btn small" onclick="deleteService(${i})">Odebrat</button></div>`).join("")||'<div class="empty">Zatím nejsou přidané služby.</div>'}
+function deleteService(i){services.splice(i,1);renderServices()}
+document.getElementById("addService").addEventListener("click",()=>{const name=prompt("Název služby:");if(!name)return;const price=prompt("Orientační cena (např. od 500 Kč):","dle dohody")||"dle dohody";services.push([name,price]);renderServices()});
+renderTrades();renderJobs();renderCalendar();renderServices();
+</script>
+</body>
+</html>
